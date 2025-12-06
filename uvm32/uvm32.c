@@ -9,6 +9,12 @@
 
 #include "mini-rv32ima.h"
 
+#define X(name) #name,
+static const char *errNames[] = {
+    LIST_OF_UVM32_ERRS
+};
+#undef X
+
 static void setup_err_evt(uvm32_state_t *vmst, uvm32_evt_t *evt) {
     evt->typ = UVM32_EVT_ERR;
     evt->data.err.errcode = vmst->err;

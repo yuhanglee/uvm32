@@ -85,12 +85,6 @@ void uvm32_HandleOtherCSRWrite(void *userdata, uint16_t csrno, uint32_t value);
 #endif
 #include "mini-rv32ima.h"
 
-#define X(name) #name,
-static const char *errNames[] = {
-    LIST_OF_UVM32_ERRS
-};
-#undef X
-
 typedef enum {
     UVM32_STATUS_PAUSED,
     UVM32_STATUS_RUNNING,

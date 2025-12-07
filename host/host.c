@@ -36,6 +36,7 @@ const uvm32_mapping_t env[] = {
 void disableRawMode(void) {
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
 }
+
 void enableRawMode(void) {
     tcgetattr(STDIN_FILENO, &orig_termios);
     atexit(disableRawMode);
@@ -89,7 +90,7 @@ bool poll_getch(uint8_t* c) {
     FD_SET(STDIN_FILENO, &readfds);
 
     tv.tv_sec = 0;
-    tv.tv_usec = 200;
+    tv.tv_usec = 0;
 
     ret = select(STDIN_FILENO + 1, &readfds, NULL, NULL, &tv);
 
@@ -159,6 +160,7 @@ int main(int argc, char *argv[]) {
     uint32_t total_instrs = 0;
     uint32_t num_ioreqs = 0;
 
+    // setup terminal for getch()
     enableRawMode();
 
     while(isrunning) {
@@ -233,12 +235,14 @@ int main(int argc, char *argv[]) {
                 return 1;
             break;
         }
+        fflush(stdout);
     }
 
     printf("Executed total of %d instructions and %d ioreqs\n", (int)total_instrs, (int)num_ioreqs);
 
     free(rom);
 
+    // put terminal back to how it was
     disableRawMode();
     return 0;
 }

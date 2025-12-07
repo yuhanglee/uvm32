@@ -23,7 +23,7 @@ static void setup_err_evt(uvm32_state_t *vmst, uvm32_evt_t *evt) {
 
 static void setStatus(uvm32_state_t *vmst, uvm32_status_t newStatus) {
     if (vmst->status == UVM32_STATUS_ERROR) {
-        // always stay in error state until a uvm32_reset()
+        // always stay in error state until a uvm32_init()
         return;
     } else {
         vmst->status = newStatus;

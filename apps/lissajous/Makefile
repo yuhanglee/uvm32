@@ -6,7 +6,7 @@ PREFIX:=${DOCKER_CMD} riscv64-unknown-elf-
 CFLAGS+=-I../../common
 CFLAGS+=-fno-stack-protector
 CFLAGS+=-static-libgcc -fdata-sections -ffunction-sections
-CFLAGS+=-g -Os -march=rv32ima_zicsr -mabi=ilp32 -static
+CFLAGS+=-g -O6 -march=rv32ima_zicsr -mabi=ilp32 -static
 LDFLAGS:= -T ../linker.ld -nostdlib -Wl,--gc-sections
 LIBS:= -lgcc # needed for softfp
 

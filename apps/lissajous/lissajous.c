@@ -86,13 +86,14 @@ double cos(double x) {
 }
 
 void main(void) {
-    int freq1 = 45;
-    int freq2 = 90;
+    float freq1 = 45;
+    float freq2 = 90;
 
     for (int i = 0; i < 300; i++) {
         putc('\n');
     }
-    print("\033[H");  // Cursor at Corner of Screen
+    print("\033[H");     // Cursor at Corner of Screen
+    print("\033[?25l");  // hide cursor
 
     float x = 0;
     float y = 0;
@@ -101,18 +102,25 @@ void main(void) {
 
     while (1) {
         uint32_t framestart = millis();
-        for (angle = 0; angle < 2 * PI; angle += 0.15) {
+
+        print("\033[?2026h");  // pause updates
+        print("\033[2J");      // cls
+
+        for (angle = 0; angle < 2 * PI; angle += 0.2) {
             movecursor(x, y);
-            x = 40 * cos(freq1 * angle + beta) + 60;
-            y = 20 * sin(freq2 * angle) + 30;
+            x = 20 * cos(freq1 * angle + beta) + 30;
+            y = 10 * sin(freq2 * angle) + 15;
             print("#");
         }
+
+        print("\033[?2026l");  // resume updates
+
         // wait for next frame
-        while (millis() < framestart + 20) {
+        while (millis() < framestart + (1000 / 30)) {
             yield();
         }
         beta += 0.05;
-
-        print("\033[2J");
+        freq1 += 0.01;
+        freq2 += 0.005;
     }
 }

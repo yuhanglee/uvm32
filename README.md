@@ -125,6 +125,8 @@ static uint32_t syscall(uint32_t id, uint32_t param) {
 }
 ```
 
+The [RISC-V SBI] is not followed (https://github.com/riscv-non-isa/riscv-sbi-doc/blob/master/riscv-sbi.adoc), a simpler approach is taken.
+
 ## syscalls
 
 There are two system syscalls used by uvm32, `halt()` and `yield()`.

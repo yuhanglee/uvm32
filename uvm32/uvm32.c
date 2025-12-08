@@ -1,10 +1,31 @@
 #define MINIRV32_IMPLEMENTATION
 #include "uvm32.h"
-#include <stdio.h>
-#include <string.h>
 
 #ifndef UVM32_MEMORY_SIZE
 #error Define UVM32_MEMORY_SIZE
+#endif
+
+#define UVM32_NULL (void *)0
+
+#ifndef UVM32_MEMCPY
+#define UVM32_MEMCPY uvm32_memcpy
+void uvm32_memcpy(void *dst, const void *src, int len) {
+    uint8_t *d = (uint8_t *)dst;
+    const uint8_t *s = (const uint8_t *)src;
+    while(len--) {
+        *(d++) = *(s++);
+    }
+}
+#endif
+
+#ifndef UVM32_MEMSET
+#define UVM32_MEMSET uvm32_memset
+void uvm32_memset(void *buf, int c, int len) {
+    uint8_t *b = (uint8_t *)buf;
+    while(len--) {
+        *(b++) = c;
+    }
+}
 #endif
 
 #include "mini-rv32ima.h"
@@ -38,7 +59,7 @@ static void setStatusErr(uvm32_state_t *vmst, uvm32_err_t err) {
 void uvm32_init(uvm32_state_t *vmst, const uvm32_mapping_t *mappings, uint32_t numMappings) {
     vmst->status = UVM32_STATUS_PAUSED;
 
-    memset(vmst->memory, 0x00, UVM32_MEMORY_SIZE);
+    UVM32_MEMSET(vmst->memory, 0x00, UVM32_MEMORY_SIZE);
     // The core lives at the end of RAM.
     vmst->core = (struct MiniRV32IMAState*)(vmst->memory + UVM32_MEMORY_SIZE - sizeof(struct MiniRV32IMAState));
     vmst->core->pc = MINIRV32_RAM_IMAGE_OFFSET;
@@ -62,7 +83,7 @@ bool uvm32_load(uvm32_state_t *vmst, uint8_t *rom, int len) {
         return false;
     }
 
-    memcpy(vmst->memory, rom, len);
+    UVM32_MEMCPY(vmst->memory, rom, len);
     return true;
 }
 
@@ -72,7 +93,7 @@ static void get_safeptr_terminated(uvm32_state_t *vmst, uint32_t addr, uint8_t t
     uint32_t p = ptrstart;
     if (p >= UVM32_MEMORY_SIZE) {
         setStatusErr(vmst, UVM32_ERR_MEM_RD);
-        buf->ptr = NULL;
+        buf->ptr = UVM32_NULL;
         buf->len = 0;
         return;
     }
@@ -80,7 +101,7 @@ static void get_safeptr_terminated(uvm32_state_t *vmst, uint32_t addr, uint8_t t
         p++;
         if (p >= UVM32_MEMORY_SIZE) {
             setStatusErr(vmst, UVM32_ERR_MEM_RD);
-            buf->ptr = NULL;
+            buf->ptr = UVM32_NULL;
             buf->len = 0;
             return;
         }
@@ -200,7 +221,7 @@ uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) 
     // an event is ready
     if (vmst->status == UVM32_STATUS_PAUSED) {
         // send back the built up event
-        memcpy(evt, &vmst->ioevt, sizeof(uvm32_evt_t));
+        UVM32_MEMCPY(evt, &vmst->ioevt, sizeof(uvm32_evt_t));
         return num_instr;
     } else {
         if (vmst->status == UVM32_STATUS_ERROR) {

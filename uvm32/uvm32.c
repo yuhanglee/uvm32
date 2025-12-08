@@ -103,7 +103,12 @@ static void get_safeptr(uvm32_state_t *vmst, uint32_t addr, uint32_t len, uvm32_
 
 uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) {
     uint32_t num_instr = 0;
-//    uvm32_evt_syscall_buf_t b;
+
+    if (vmst->status == UVM32_STATUS_ERROR) {
+        // vm is in an error state, but user wants to continue
+        // most likely after UVM32_ERR_HUNG
+        vmst->status = UVM32_STATUS_PAUSED;
+    }
 
     if (vmst->status != UVM32_STATUS_PAUSED) {
         setStatusErr(vmst, UVM32_ERR_NOTREADY);

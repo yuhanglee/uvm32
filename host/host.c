@@ -36,7 +36,7 @@ const uvm32_mapping_t env[] = {
 
 void disableRawMode(void) {
     tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
-    printf("\033c");
+    printf("\033[?25h");    // show cursor
     fflush(stdout);
 }
 

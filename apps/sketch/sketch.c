@@ -1,5 +1,10 @@
 #include "uvm32_target.h"
 
+// provide main, with setup()/loop() flow
+void setup(void);
+bool loop(void);
+
+
 uint32_t count;
 
 bool loop(void) {
@@ -15,4 +20,11 @@ void setup(void) {
     count = 0;
 }
 
+
+void main(void) {
+    setup();
+    while(loop()) {
+        yield();
+    }
+}
 

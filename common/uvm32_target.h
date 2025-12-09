@@ -59,16 +59,3 @@ static uint32_t syscall(uint32_t id, uint32_t param) {
 
 #include "uvm32_common_custom.h"
 
-// provide main, with setup()/loop() flow
-void setup(void);
-bool loop(void);
-
-#ifndef USE_MAIN
-void main(void) {
-    setup();
-    while(loop()) {
-        yield();
-    }
-}
-#endif
-

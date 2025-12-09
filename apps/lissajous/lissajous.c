@@ -1,4 +1,3 @@
-#define USE_MAIN
 #include "uvm32_target.h"
 
 // https://github.com/shastro/CodeGolf-Lissajous/blob/master/lissa.c

@@ -1,4 +1,3 @@
-#define USE_MAIN
 #include "uvm32_target.h"
 
 void write(int n) {

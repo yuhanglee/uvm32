@@ -1,6 +1,4 @@
-#define USE_MAIN
 #include "uvm32_target.h"
-
 #include "uvm32.h"
 #include "../common/uvm32_common_custom.h"
 

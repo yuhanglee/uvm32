@@ -21,10 +21,10 @@ export fn main() void {
         if (uvm.getc()) |key| {
             switch(key) {
                 ' ' => nextEvent = mibu.events.Event{.key = .{.code = .{.char = ' '}}},
-                'a' => nextEvent = mibu.events.Event{.key = .{.code = .left}},
-                'd' => nextEvent = mibu.events.Event{.key = .{.code = .right}},
-                'w' => nextEvent = mibu.events.Event{.key = .{.code = .up}},
-                's' => nextEvent = mibu.events.Event{.key = .{.code = .down}},
+                0x44 => nextEvent = mibu.events.Event{.key = .{.code = .left}},
+                0x43 => nextEvent = mibu.events.Event{.key = .{.code = .right}},
+                0x41 => nextEvent = mibu.events.Event{.key = .{.code = .up}},
+                0x42 => nextEvent = mibu.events.Event{.key = .{.code = .down}},
                 'q' => gameRunning = false,
                 else => {},
             }

@@ -4,10 +4,10 @@ uvm32 is a minimalist, dependency-free virtual machine sandbox designed for micr
 
 ## What is it for?
 
-* As a no-frills alternative to embedded script engines ([https://www.lua.org/](Lua), [https://duktape.org/](Duktape), [https://micropython.org/](MicroPython), etc)
-* As a [https://en.wikipedia.org/wiki/Sandbox_(computer_security)](sandbox) to isolate untrusted or unreliable elements of a system
-* As a way to allow development in modern systems programming languages where a compiler for the target may not be available ([apps/rust-hello](apps/rust-hello))
-* As a way to "write once, run anywhere" and avoid maintaining multiple software variants
+* As a no-frills alternative to embedded script engines ([Lua](https://www.lua.org/), [Duktape](https://duktape.org/), [MicroPython](https://micropython.org/), etc)
+* As a [sandbox](https://en.wikipedia.org/wiki/Write_once,_run_anywhere) to isolate untrusted or unreliable elements of a system
+* As a way to allow development in modern systems programming languages where a compiler for the target may not be available ([rust-hello](apps/rust-hello))
+* As a way to [write once, run anywhere](https://en.wikipedia.org/wiki/Write_once,_run_anywhere) and avoid maintaining multiple software variants
 
 ## Features
 

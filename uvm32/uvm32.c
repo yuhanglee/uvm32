@@ -138,27 +138,33 @@ void uvm32_clearError(uvm32_state_t *vmst) {
 }
 
 uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) {
-    uint32_t num_instr = 0;
+    const uint32_t min_instrs = 1;
+    uint32_t orig_instr_meter = instr_meter;
+
+    if (instr_meter < min_instrs) {
+        instr_meter = min_instrs;
+    }
 
     if (vmst->stack_canary != UVM32_NULL && *vmst->stack_canary != STACK_CANARY_VALUE) {
         setStatusErr(vmst, UVM32_ERR_INTERNAL_CORE);
         setup_err_evt(vmst, evt);
-        return num_instr;
+        return orig_instr_meter - instr_meter;
     }
 
     if (vmst->status != UVM32_STATUS_PAUSED) {
         setStatusErr(vmst, UVM32_ERR_NOTREADY);
         setup_err_evt(vmst, evt);
-        return num_instr;
+        return orig_instr_meter - instr_meter;
     }
 
     setStatus(vmst, UVM32_STATUS_RUNNING);
 
     // run CPU until no longer in running state
-    while(vmst->status == UVM32_STATUS_RUNNING) {
+    while(vmst->status == UVM32_STATUS_RUNNING && instr_meter > 0) {
         uint64_t elapsedUs = 1;
         uint32_t ret;
         ret = MiniRV32IMAStep(vmst, &vmst->core, vmst->memory, 0, elapsedUs, 1);
+        instr_meter--;
     
         switch(ret) {
             case 0:  // ok
@@ -213,28 +219,25 @@ uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) 
             break;
         }
 
-        num_instr++;
-
-        // check instruction meter, in case of hang/infinite loop
-        if (instr_meter-- == 0) {
+        if (vmst->status == UVM32_STATUS_RUNNING && instr_meter == 0) {
+            // no syscall occurred, so we've hung
             setStatusErr(vmst, UVM32_ERR_HUNG);
             setup_err_evt(vmst, evt);
-            return num_instr;
+            return orig_instr_meter - instr_meter;
         }
-
     }
 
 
     if (vmst->status == UVM32_STATUS_ENDED) {
         evt->typ = UVM32_EVT_END;
-        return num_instr;
+        return orig_instr_meter - instr_meter;
     }
 
     // an event is ready
     if (vmst->status == UVM32_STATUS_PAUSED) {
         // send back the built up event
         UVM32_MEMCPY(evt, &vmst->ioevt, sizeof(uvm32_evt_t));
-        return num_instr;
+        return orig_instr_meter - instr_meter;
     } else {
         if (vmst->status == UVM32_STATUS_ERROR) {
             setup_err_evt(vmst, evt);
@@ -242,7 +245,7 @@ uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) 
             setStatusErr(vmst, UVM32_ERR_INTERNAL_STATE);
             setup_err_evt(vmst, evt);
         }
-        return num_instr;
+        return orig_instr_meter - instr_meter;
     }
 }
 
@@ -293,6 +296,17 @@ const char *uvm32_getcstr(uvm32_state_t *vmst, uvm32_evt_t *evt, uvm32_arg_t arg
 uvm32_evt_syscall_buf_t uvm32_getbuf(uvm32_state_t *vmst, uvm32_evt_t *evt, uvm32_arg_t argPtr, uvm32_arg_t argLen) {
     uvm32_evt_syscall_buf_t scb;
     if (!get_safeptr(vmst, uvm32_getval(vmst, evt, argPtr), uvm32_getval(vmst, evt, argLen), &scb)) {
+        setStatusErr(vmst, UVM32_ERR_MEM_RD);
+        garbage = 0;
+        scb.ptr = (uint8_t *)&garbage;
+        scb.len = 0;
+    }
+    return scb;
+}
+
+uvm32_evt_syscall_buf_t uvm32_getbuf_fixed(uvm32_state_t *vmst, uvm32_evt_t *evt, uvm32_arg_t argPtr, uint32_t len) {
+    uvm32_evt_syscall_buf_t scb;
+    if (!get_safeptr(vmst, uvm32_getval(vmst, evt, argPtr), len, &scb)) {
         setStatusErr(vmst, UVM32_ERR_MEM_RD);
         garbage = 0;
         scb.ptr = (uint8_t *)&garbage;

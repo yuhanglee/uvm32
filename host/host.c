@@ -171,6 +171,7 @@ int main(int argc, char *argv[]) {
                 printf("UVM32_EVT_ERR '%s' (%d)\n", evt.data.err.errstr, (int)evt.data.err.errcode);
                 if (evt.data.err.errcode == UVM32_ERR_HUNG) {
                     printf("VM may have hung, increase max_instrs_per_run\n");
+                    uvm32_clearError(&vmst);    // allow to continue
                 } else {
                     isrunning = false;
                 }

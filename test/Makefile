@@ -1,4 +1,10 @@
-TESTS = example_1 stackoverflow custom_syscall
+TESTS = \
+    basic_syscalls  \
+    stackoverflow   \
+    custom_syscall  \
+    syscall_args \
+    meter
+
 RUNCMD = $(foreach TEST,${TESTS},make -C ${TEST} &&)
 CLEANCMD = $(foreach TEST,${TESTS},make -C ${TEST} clean &&)
 

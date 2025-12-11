@@ -21,7 +21,7 @@ On an [STM32L0](https://www.st.com/en/microcontrollers-microprocessors/stm32l0-s
 * Small enough for "if this then that" scripts/plugins, capable enough for much more
 * Aims for safety over speed, bad code running in the VM should never be able to crash the host
 
-Although based on a fully fledged CPU emulator, uvm32 is intended for executing custom script like logic, not for simulating hardware.
+Although based on a [fully fledged CPU emulator](https://github.com/cnlohr/mini-rv32ima), uvm32 is intended for executing custom script like logic, not for simulating hardware.
 
 ## Example
 

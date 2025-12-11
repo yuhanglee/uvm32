@@ -1,4 +1,4 @@
-# 🧮 uvm32
+# 🌱 uvm32
 
 uvm32 is a minimalist, dependency-free virtual machine sandbox designed for microcontrollers and other resource-constrained devices. Single C file, no dynamic memory allocations, asynchronous design, pure C99.
 

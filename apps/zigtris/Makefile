@@ -10,6 +10,6 @@ clean: clean_common
 	rm -rf zig-out .zig-cache
 
 test: all
-	${TOPDIR}/host/host ${PROJECT}.bin
+	${TOPDIR}/hosts/host/host ${PROJECT}.bin
 
 include ${TOPDIR}/apps/makefile.common

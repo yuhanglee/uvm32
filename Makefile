@@ -2,18 +2,12 @@
 
 all:
 	make -C test
-	(cd host && make)
-	(cd host-mini && make)
-	(cd host-parallel && make)
-	(cd host-arduino && make)
+	(cd hosts && make)
 	(cd apps && make)
 
 clean:
 	make -C test clean
-	(cd host && make clean)
-	(cd host-mini && make clean)
-	(cd host-parallel && make clean)
-	(cd host-arduino && make clean)
+	(cd hosts && make clean)
 	(cd apps && make clean)
 
 test:

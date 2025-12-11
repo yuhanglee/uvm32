@@ -67,7 +67,7 @@ void loop(void) {
         Serial.println("Running VM");
         // setup vm
         uvm32_init(&vmst);
-        uvm32_load(&vmst, ___precompiled_mandel_bin, ___precompiled_mandel_bin_len);
+        uvm32_load(&vmst, mandel, mandel_len);
         isrunning = true;
     }
 }

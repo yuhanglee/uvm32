@@ -1,6 +1,6 @@
 FROM ubuntu:25.04
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 RUN apt-get -y update
 
 # tzdata
@@ -17,9 +17,9 @@ RUN apt-get install -y gcc-riscv64-unknown-elf build-essential
 # zig
 RUN apt-get install -y curl
 RUN curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
-ENV ZVM_INSTALL /root/.zvm/self
-ENV PATH "$PATH:/root/.zvm/bin:/root/.zvm/self"
-ENV PATH "$PATH:/root/.zvm/bin"
+ENV ZVM_INSTALL=/root/.zvm/self
+ENV PATH="$PATH:/root/.zvm/bin:/root/.zvm/self"
+ENV PATH="$PATH:/.zvm/bin"
 RUN zvm i 0.15.2
 
 # rust
@@ -32,3 +32,4 @@ RUN apt-get install -y libclang1
 RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 RUN arduino-cli core install arduino:avr
 RUN apt-get install -y qemu-system-misc
+

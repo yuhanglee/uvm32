@@ -23,7 +23,7 @@ On an [STM32L0](https://www.st.com/en/microcontrollers-microprocessors/stm32l0-s
 
 Although based on a [fully fledged CPU emulator](https://github.com/cnlohr/mini-rv32ima), uvm32 is intended for executing custom script like logic, not for simulating hardware.
 
-# Understanding this repo
+## Understanding this repo
 
 uvm32 is a tiny virtual machine, all of the code is in [uvm32](uvm32).
 

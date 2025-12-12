@@ -1,4 +1,5 @@
-// Definitions needed by both host and target
+// Syscall definitions needed by both host and target for sample apps
+// These are not required when building a custom host target code with uvm32
 
 // syscalls for exposed host functions, start at 0
 #define UVM32_SYSCALL_PUTC      0x00000000

@@ -6,7 +6,7 @@ fn main() {
     println!("cargo:rustc-link-arg-bin=rust-hello=-T../common/linker.ld");
 
     let bindings = bindgen::Builder::default()
-        .header("../../common/uvm32_sys.h")
+        .header("uvm32_headers.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
         .expect("Unable to generate bindings");

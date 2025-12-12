@@ -93,24 +93,30 @@ int main(int argc, char *argv[]) {
 
 ## Samples
 
- * [host](hosts/host) vm host which loads a binary and runs to completion, handling multiple syscall types
- * [host-mini](hosts/host-mini) minimal vm host (shown above), with baked in bytecode
- * [host-parallel](hosts/host-parallel) parallel vm host running multiple vm instances concurrently, with baked in bytecode
- * [host-arduino](hosts/host-arduino) vm host as Arduino sketch (`make test` to run AVR code in qemu)
- * [apps/helloworld](apps/helloworld) C hello world program
- * [apps/conio](apps/conio) C console IO demo
- * [apps/lissajous](apps/lissajous) C console lissajous curve (showing softfp, floating point)
- * [apps/maze](apps/maze) C ASCII art recursive maze generation
- * [apps/hello-asm](apps/hello-asm) Minimal hello world assembly
- * [apps/fib](apps/fib) C fibonacci series program (iterative and recursive)
- * [apps/self](apps/self) host-mini with embedded mandelbrot generation program, compiled as an app (inception!)
- * [apps/sketch](apps/sketch) C Arduino/Wiring/Processing type program in `setup()` and `loop()` style
- * [apps/rust-hello](apps/rust-hello) Rust hello world program (note, the version of rust installed by brew on mac has issues, use the official rust installer from https://rust-lang.org/learn/get-started/)
- * [apps/zig-mandel](apps/zig-mandel) Zig ASCII mandelbrot generator program
- * [apps/zigtris](apps/zigtris) Zig Tetris (https://github.com/ringtailsoftware/zigtris)
- * [apps/zigalloc](apps/zigalloc) Demonstration of using extram with zig allocator
- * [apps/heap](apps/heap) Demonstration of `malloc()` on extram in C
- * [apps/zigdoom](apps/zigdoom) Port of PureDOOM (making use of Zig to provide an allocator and libc like functions)
+ * VM hosts
+  * [host](hosts/host) vm host which loads a binary and runs to completion, handling multiple syscall types
+  * [host-mini](hosts/host-mini) minimal vm host (shown above), with baked in bytecode
+  * [host-parallel](hosts/host-parallel) parallel vm host running multiple vm instances concurrently, with baked in bytecode
+  * [host-arduino](hosts/host-arduino) vm host as Arduino sketch (`make test` to run AVR code in qemu)
+ * C sample apps
+  * [apps/helloworld](apps/helloworld) C hello world program
+  * [apps/heap](apps/heap) Demonstration of `malloc()` on extram in C
+  * [apps/conio](apps/conio) C console IO demo
+  * [apps/lissajous](apps/lissajous) C console lissajous curve (showing softfp, floating point)
+  * [apps/maze](apps/maze) C ASCII art recursive maze generation
+  * [apps/fib](apps/fib) C fibonacci series program (iterative and recursive)
+  * [apps/sketch](apps/sketch) C Arduino/Wiring/Processing type program in `setup()` and `loop()` style
+ * Rust sample apps
+  * [apps/rust-hello](apps/rust-hello) Rust hello world program (note, the version of rust installed by brew on mac has issues, use the official rust installer from https://rust-lang.org/learn/get-started/)
+ * Zig sample apps
+  * [apps/zig-mandel](apps/zig-mandel) Zig ASCII mandelbrot generator program
+  * [apps/zigtris](apps/zigtris) Zig Tetris (https://github.com/ringtailsoftware/zigtris)
+  * [apps/zigalloc](apps/zigalloc) Demonstration of using extram with zig allocator
+  * [apps/zigdoom](apps/zigdoom) Port of PureDOOM (making use of Zig to provide an allocator and libc like functions)
+ * Assembly sample apps
+  * [apps/hello-asm](apps/hello-asm) Minimal hello world assembly
+ * VM host as an app
+  * [apps/self](apps/self) host-mini with embedded mandelbrot generation program, compiled as an app (VM running VM)
 
 ## Quickstart (docker)
 

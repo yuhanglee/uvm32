@@ -17,7 +17,10 @@ distrib: all
 	cp apps/*/*.bin precompiled/
 
 dockerbuild:
-	docker build -t uvm32 . --no-cache
+	DOCKER_BUILDKIT=1 docker build -t uvm32 . --no-cache
+
+dockerbuild_cached:
+	DOCKER_BUILDKIT=1 docker build -t uvm32 .
 
 dockershell:
 	docker run -v `pwd`:/data -w /data --rm -ti uvm32 /bin/bash

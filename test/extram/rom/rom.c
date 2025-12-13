@@ -73,6 +73,10 @@ void main(void) {
             // pass a slice beyond end of extram
             printbuf((uint32_t)UVM32_EXTRAM_BASE + 32, 64);   // extram has been shrunk, this is now out of bounds,
         } break;
+        case TEST14: {
+            // pass a string beyond end of extram
+            println((uint32_t)UVM32_EXTRAM_BASE);   // extram has been shrunk, this is now out of bounds,
+        } break;
 
     }
 }

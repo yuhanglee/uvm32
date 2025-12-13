@@ -4,7 +4,8 @@ TESTS = \
     custom_syscall  \
     syscall_args \
     meter \
-    extram
+    extram \
+    badcode
 
 RUNCMD = $(foreach TEST,${TESTS},make -C ${TEST} &&)
 CLEANCMD = $(foreach TEST,${TESTS},make -C ${TEST} clean &&)

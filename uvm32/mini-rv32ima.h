@@ -501,6 +501,7 @@ MINIRV32_STEPPROTO
 	// Handle traps and interrupts.
 	if( trap )
 	{
+#ifndef MINIRV32_RETURN_TRAP
 		if( trap & 0x80000000 ) // If prefixed with 1 in MSB, it's an interrupt, not a trap.
 		{
 			SETCSR( mcause, trap );
@@ -520,9 +521,13 @@ MINIRV32_STEPPROTO
 
 		// If trapping, always enter machine mode.
 		CSR( extraflags ) |= 3;
-
 		trap = 0;
 		pc += 4;
+#else
+        if (trap > 0) {
+            return trap;
+        }
+#endif
 	}
 
 	if( CSR( cyclel ) > cycle ) CSR( cycleh )++;

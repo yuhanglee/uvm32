@@ -6,7 +6,8 @@ TESTS = \
     meter \
     extram \
     badcode \
-    invalid_opcodes
+    invalid_opcodes \
+    minirv32_internal
 
 RUNCMD = $(foreach TEST,${TESTS},make -C ${TEST} &&)
 CLEANCMD = $(foreach TEST,${TESTS},make -C ${TEST} clean &&)
@@ -14,7 +15,7 @@ CLEANCMD = $(foreach TEST,${TESTS},make -C ${TEST} clean &&)
 ifeq (,$(shell which gcovr))
 	GCOVRCMD=echo Install gcovr for code coverage reports
 else
-    GCOVRCMD=gcovr -r ../ --filter ".*uvm32.c"
+    GCOVRCMD=gcovr -r ../ --filter ".*uvm32.c" --filter ".*mini.*"
 	PERC=$(shell gcovr -r ../ --filter ".*uvm32.c" | grep uvm | awk '{print $$4}')
 endif
 

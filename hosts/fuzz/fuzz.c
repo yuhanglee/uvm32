@@ -18,6 +18,9 @@ int main(int argc, char *argv[]) {
         uvm32_init(vmst);
         unsigned char *rom = __AFL_FUZZ_TESTCASE_BUF;
         uvm32_load(vmst, rom, __AFL_FUZZ_TESTCASE_LEN);
+
+        uvm32_extram(vmst, rom, __AFL_FUZZ_TESTCASE_LEN);
+
         memset(&evt, 0x00, sizeof(evt));
         for (int i=0;i<10;i++) {
             uvm32_run(vmst, &evt, 1000);

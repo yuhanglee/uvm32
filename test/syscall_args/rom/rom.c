@@ -47,6 +47,11 @@ void syscall_i_test(void) {
     syscall((uint32_t)SYSCALL_I, (uint32_t)p, 0);
 }
 
+void syscall_j_test(void) {
+    uint32_t *p = (uint32_t *)0xF0000000;
+    syscall((uint32_t)SYSCALL_I, (uint32_t)p[0], 0);    // try to read from beyond memory and not in MMIO region
+}
+
 void main(void) {
     switch(syscall(SYSCALL_PICKTEST, 0, 0)) {
         case SYSCALL_A:
@@ -69,6 +74,9 @@ void main(void) {
         break;
         case SYSCALL_I:
             syscall_i_test();
+        break;
+        case SYSCALL_J:
+            syscall_j_test();
         break;
 
     }

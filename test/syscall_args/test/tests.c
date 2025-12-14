@@ -211,3 +211,18 @@ void test_syscall_args_bufrd_toolarge(void) {
     TEST_ASSERT_EQUAL(evt.data.err.errcode, UVM32_ERR_MEM_RD);
 }
 
+void test_syscall_args_read_badram(void) {
+    // run the vm
+    uvm32_run(&vmst, &evt, 1000);
+    // check for picktest syscall
+    TEST_ASSERT_EQUAL(evt.typ, UVM32_EVT_SYSCALL);
+    TEST_ASSERT_EQUAL(evt.data.syscall.code, SYSCALL_PICKTEST);
+    uvm32_arg_setval(&vmst, &evt, RET, SYSCALL_J);
+
+    uvm32_run(&vmst, &evt, 1000);
+    // check for error state
+    uvm32_run(&vmst, &evt, 100);
+    TEST_ASSERT_EQUAL(evt.typ, UVM32_EVT_ERR);
+    TEST_ASSERT_EQUAL(evt.data.err.errcode, UVM32_ERR_MEM_RD);
+}
+

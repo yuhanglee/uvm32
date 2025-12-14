@@ -273,8 +273,8 @@ uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) 
                      case UVM32_SYSCALL_HALT:
                         setStatus(vmst, UVM32_STATUS_ENDED);
                     break;
-                    case UVM32_SYSCALL_STACKPROTECT: {
 #ifdef UVM32_STACK_PROTECTION
+                    case UVM32_SYSCALL_STACKPROTECT: {
                         // don't allow errant code to change it once set
                         if (vmst->_stack_canary == (uint8_t *)NULL) {
                             uint32_t param0 = vmst->_core.regs[10]; // a0
@@ -295,8 +295,8 @@ uint32_t uvm32_run(uvm32_state_t *vmst, uvm32_evt_t *evt, uint32_t instr_meter) 
                                 *vmst->_stack_canary = STACK_CANARY_VALUE;
                             }
                         }
-#endif
                     } break;
+#endif
                     default:
                         // user defined syscalls
                         vmst->_ioevt.typ = UVM32_EVT_SYSCALL;

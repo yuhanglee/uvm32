@@ -9,9 +9,10 @@
 .align 4
 _start:
 
-la a0, _estack
-li a7, uvm32_syscall_stackprotect
-ecall
+# Uncomment below to enable stack protection, requires -DUVM32_STACK_PROTECTION
+# la a0, _estack
+# li a7, uvm32_syscall_stackprotect
+# ecall
 
 # sp is already setup by vm
 sw	ra,12(sp)

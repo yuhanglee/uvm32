@@ -34,7 +34,7 @@ static int keyBufferWr = 0;
 static int keyBufferRd = 0;
 
 // circular buffer of audio samples, so vm code can read them as it's ready
-#define AUDIOBUFFER_LEN 4096
+#define AUDIOBUFFER_LEN (2048*10)
 static int16_t audioBuffer[AUDIOBUFFER_LEN];
 static int audioBufferWr = 0;
 static int audioBufferRd = 0;
@@ -134,7 +134,7 @@ void audiocb(void *userdata, SDL_AudioStream *stream, int additional_amount, int
         return;
     }
     
-    while(total_amount > 0) {
+    while(additional_amount > 0) {
         int16_t sample[2];
 
         // always expect audio in pairs
@@ -147,7 +147,7 @@ void audiocb(void *userdata, SDL_AudioStream *stream, int additional_amount, int
         } else {
             return;
         }
-        total_amount -= 4;
+        additional_amount -= 4;
     }
 }
 
@@ -251,7 +251,7 @@ int main(int argc, char *argv[]) {
     SDL_AudioSpec srcspec = {
         .format = SDL_AUDIO_S16,
         .channels = 2,
-        .freq = 44100,
+        .freq = 11025,
     };
 
     SDL_AudioStream *stream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &srcspec, audiocb, NULL);
@@ -339,14 +339,15 @@ int main(int argc, char *argv[]) {
                     case UVM32_SYSCALL_GETC: {
                         uvm32_arg_setval(vmst, &evt, RET, 0xFFFFFFFF);
                     } break;
+                    case UVM32_SYSCALL_CANRENDERAUDIO:
+                        uvm32_arg_setval(vmst, &evt, RET, audioBufferWr == audioBufferRd);  // queue is empty
+                    break;
                     case UVM32_SYSCALL_RENDERAUDIO: {
                         uvm32_slice_t buf = uvm32_arg_getslice(vmst, &evt, ARG0, ARG1);
-                        printf("Got audio buf len=%d\n", buf.len);
                         int16_t *samples = (int16_t *)buf.ptr;
                         for (int i=0;i<buf.len/2;i++) {
                             audio_enq(samples[i]);
                         }
-
                     } break;
                     case UVM32_SYSCALL_RENDER: {
                         uvm32_slice_t buf = uvm32_arg_getslice(vmst, &evt, ARG0, ARG1);

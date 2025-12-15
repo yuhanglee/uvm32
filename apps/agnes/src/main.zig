@@ -75,7 +75,6 @@ fn submain() !void {
     agnes.agnes_set_input(ag, &ag_input, 0);
 
     while(true) {
-        checkKeys();
         var new_frame:bool = false;
         _ = agnes.agnes_tick(ag, &new_frame);
 
@@ -96,6 +95,7 @@ fn submain() !void {
             }
 
             uvm.render(@ptrCast(&gfxFramebuffer), WIDTH * HEIGHT * 4);
+            checkKeys();
         }
     }
 }

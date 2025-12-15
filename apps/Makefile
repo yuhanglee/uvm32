@@ -16,6 +16,7 @@ all:
 	(cd gfx && make)
 	(cd zigdoom && make)
 	(cd tinygl && make)
+	(cd agnes && make)
 
 clean:
 	(cd sketch && make clean)
@@ -35,4 +36,5 @@ clean:
 	(cd gfx && make clean)
 	(cd zigdoom && make clean)
 	(cd tinygl && make clean)
+	(cd agnes && make clean)
 

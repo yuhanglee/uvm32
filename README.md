@@ -139,6 +139,7 @@ int main(int argc, char *argv[]) {
     * [apps/zigalloc](apps/zigalloc) Demonstration of using extram with zig allocator
     * [apps/zigdoom](apps/zigdoom) Port of PureDOOM (making use of Zig to provide an allocator and libc like functions)
     * [apps/tinygl](apps/tinygl) TinyGL gears (softfp stress test)
+    * [apps/agnes](apps/agnes) Nintendo Entertainment System emulator (currently very slow)
  * Assembly sample apps
     * [apps/hello-asm](apps/hello-asm) Minimal hello world assembly
  * VM host as an app

@@ -16,8 +16,8 @@
 
 #include "../common/uvm32_common_custom.h"
 
-#define WIDTH 320
-#define HEIGHT 200
+int WIDTH = 320;
+int HEIGHT = 200;
 
 #define WINDOW_WIDTH WIDTH*3
 #define WINDOW_HEIGHT HEIGHT*3
@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
     }
 
     // parse commandline args
-    while ((c = getopt(argc, argv, "hi:e:")) != -1) {
+    while ((c = getopt(argc, argv, "hi:e:W:H:")) != -1) {
         switch(c) {
             case 'h':
                 usage(argv[0]);
@@ -190,6 +190,12 @@ int main(int argc, char *argv[]) {
             break;
             case 'e':
                 extram_len = strtoll(optarg, NULL, 10);
+            break;
+            case 'W':
+                WIDTH = strtoll(optarg, NULL, 10);
+            break;
+            case 'H':
+                HEIGHT = strtoll(optarg, NULL, 10);
             break;
         }
     }

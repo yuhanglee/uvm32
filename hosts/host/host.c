@@ -190,6 +190,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    srand(clock());
+
     uvm32_init(&vmst);
 
     if (!uvm32_load(&vmst, rom, romlen)) {
@@ -263,6 +265,9 @@ int main(int argc, char *argv[]) {
                     break;
                     case UVM32_SYSCALL_PRINTHEX:
                         printf("%08x", uvm32_arg_getval(&vmst, &evt, ARG0));
+                    break;
+                    case UVM32_SYSCALL_RAND:
+                        uvm32_arg_setval(&vmst, &evt, RET, rand());
                     break;
                     case UVM32_SYSCALL_MILLIS: {
                         clock_t now = clock() / (CLOCKS_PER_SEC / 1000);

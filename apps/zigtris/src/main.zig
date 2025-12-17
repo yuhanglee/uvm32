@@ -10,7 +10,7 @@ export fn main() void {
     var gameRunning = true;
     var lastUpdate:u32 = 0;
 
-    zigtris.gamesetup(console, uvm.millis()) catch |err| {
+    zigtris.gamesetup(console, uvm.rand()) catch |err| {
         _ = console.print("err {any}\n", .{err}) catch 0;
         _ = console.flush() catch 0;
         return;

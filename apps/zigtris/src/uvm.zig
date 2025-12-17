@@ -27,6 +27,10 @@ pub inline fn millis() u32 {
     return syscall(uvm32.UVM32_SYSCALL_MILLIS, 0, 0);
 }
 
+pub inline fn rand() u32 {
+    return syscall(uvm32.UVM32_SYSCALL_RAND, 0, 0);
+}
+
 // dupeZ would be better, but want to avoid using an allocator
 // this is of course, unsafe...
 var termination_buf:[128]u8 = undefined;

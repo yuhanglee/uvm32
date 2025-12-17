@@ -50,6 +50,7 @@ static uint32_t syscall(uint32_t id, uint32_t param1, uint32_t param2) {
 #define printbuf(x, y)  syscall_cast(UVM32_SYSCALL_PRINTBUF, x, y)
 #define render(x, y)    syscall_cast(UVM32_SYSCALL_RENDER, x, y)
 #define getkey()        syscall_cast(UVM32_SYSCALL_GETKEY, 0, 0)
+#define rand()          syscall_cast(UVM32_SYSCALL_RAND, 0, 0)
 
 extern char _estack;
 

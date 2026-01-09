@@ -33,6 +33,7 @@ SECTIONS
 		*(.dynsym)
 		*(.dynstr)
 		*(.header)
+		*(.eh_frame)
 	} : phdr
 
 	.data : ALIGN(16) {
